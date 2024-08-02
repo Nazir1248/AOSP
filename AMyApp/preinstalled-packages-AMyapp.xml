@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config>
+    <install-in-user-type package="com.example.mynewproject">
+        <install-in user-type="FULL" />
+        <install-in user-type="PROFILE" />
+    </install-in-user-type>
+</config>
+
+<!-- (Note:-package="com.example.mynewproject"> you can modify it ) 
+ -->

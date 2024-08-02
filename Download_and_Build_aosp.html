@@ -1,0 +1,86 @@
+<h1>DOWNLOAD AND BUILD AOSP</h1>
+
+<h3>Set up for AOSP development (9.0 or later) 
+</h3>
+
+<br>
+<br>
+<h3>Meet hardware requirements
+</h3>
+<h5>• Preferred operating system: Ubuntu</h5>
+<h5>• MacOS was supported until June 22, 2021
+</h5>
+<h6>Development workstation should meet or exceed these hardware requirements:
+</h6>
+<p>
+    • A 64-bit x86 system.<br>
+• At least 400 GB of free disk space to check out and build the code (250 GB to check out + 150 GB to build).<br>
+• A minimum of 20 GB of RAM.<br>
+</p>
+
+
+<h2>Install required packages</h2>
+<p>To build Android 11 or higher, you must use Ubuntu 18.04 or later. To install required packages for Ubuntu 18.04 or later, run the following command:
+</p>
+<p>Open terminal and run the following command:
+</p>
+<p>$ sudo apt-get install git-core gnupg flex bison build-essential zip curl zlib1g-dev libc6-dev-i386 x11proto-core-dev libx11-dev lib32z1-dev libgl1-mesa-dev libxml2-utils xsltproc unzip fontconfig
+</p>
+
+
+<h2>Install required software
+</h2>
+<p>Before you can work with AOSP, you must have installations of OpenJDK, Make, Python 3, and Repo. The AOSP main branch of Android comes with prebuilt versions of OpenJDK, Make, and Python 3, so additional installation steps aren't required
+</p>
+
+<h4>Install Repo</h4>
+
+<h5>Download the current package information:
+</h5>
+<p>$sudo apt-get update</p>
+
+<p>Run the following command to install the Repo launcher:
+</p>
+<p>$sudo apt-get install repo
+</p>
+<h4>Install Repo Manually</h4>
+<p>
+
+$export REPO=$(mktemp /tmp/repo.XXXXXXXXX)<br>
+curl -o ${REPO} https://storage.googleapis.com/git-repo-downloads/repo<br>
+gpg --recv-keys 8BB9AD793E8E6153AF0F9A4416530D5E920F5C65<br>
+curl -s https://storage.googleapis.com/git-repo-downloads/repo.asc | gpg --verify - ${REPO} && install -m 755 ${REPO} ~/bin/repo<br>
+</p>
+<br>
+<br>
+<br>
+<br>
+<h4>Verify the Repo launcher version:
+</h4>
+<p>$repo version</p>
+
+<h1>Download the Android source </h1>
+
+<h3>Initialize the Repo client</h3>
+<p>
+    Create and navigate to a working directory:<br>
+$mkdir “working_directory”  (aosp12)<br>
+$cd       “working_directory”  (aosp12)<br>
+</p>
+
+<h2>
+    Initialize your working directory for source control:
+</h2>
+<p>
+    $repo init --partial-clone -b main -u https://android.googlesource.com/platform/manifest -b android-14.0.0_r54</p>
+
+<p>You can choose Tag any tag(android-14.0.0_r54)
+    <a>https://source.android.com/docs/setup/reference/build-numbers</a>
+</p>
+
+
+
+<h2>Download the Android source </h2>
+<p> $ repo sync -c -j8</p>
+
+<h2>End</h2>

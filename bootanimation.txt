@@ -1,0 +1,60 @@
+<h1>### Replace new boot animation</h1>
+
+<p>To replace the existing boot animation located at packages/services/Car/car_product/bootanimations/bootanimation-832.zip in the Android Open Source Project (AOSP), you'll need to follow these steps:
+Steps to Replace Existing Boot Animation</p>
+
+<h3>1. Prepare Your Custom Boot Animation</h3>
+
+Create Your Custom Boot Animation:
+Design your boot animation as a sequence of PNG images organized into <br>
+Part0 <br>
+Part1<br>
+Part2<br>
+Part3<br>
+Part4<br>
+Create a desc.txt file to describe the animation properties (width, height, frame rate, loop behavior, etc.).<br>
+<br>
+desc.txt<br>
+
+<p>All part kept into the a folder “bootanimation”</p>
+
+<h4>bootanimation :</h4>
+Part0<br>
+Part1<br>
+Part2<br>
+Part3<br>
+Part4<br>
+Desc.txt<br>
+<br>	
+<p>Place the bootanimation folder into the path:</p>
+<br>
+<h4>Path: aosp/packages/services/Car/car_product/bootanimations
+</h4><br>
+<p>Open the terminal and Run:</p><br>
+<p>	$zip	-r -Z store boot.zip desc.txt part0 part1 part2 part3 
+</p><br>
+<p>boot.zip  created into the folder bootanimation,now this boot.zip file place to the path </p><br>
+<p>aosp/packages/services/Car/car_product/bootanimations</p><br>
+<p>Change this to </p>
+<h6># Boot animation</h6><br>
+<p>PRODUCT_COPY_FILES += \</p>
+<p>   packages/services/Car/car_product/bootanimations/bootanimation-832.zip:system/media/bootanimation.zip
+</p>
+
+
+<p># Boot animation</p>
+<p>PRODUCT_COPY_FILES += \</p>
+<p>   packages/services/Car/car_product/bootanimations/boot.zip:system/media/bootanimation.zip
+</p>
+
+
+
+<h6>Now run the command
+</h6>
+<p>$ m-j$(number of jobs)
+</p>
+<p>$ emulator -no-snapshot-load
+</p>
+
+<h3>Now we can see the bootanimation will change in the car emulator 
+</h3>

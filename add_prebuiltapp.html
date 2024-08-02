@@ -1,0 +1,162 @@
+<h1>###  SETPS TO ADD PREBUILT APP IN ANDROID OPEN SOURCE PROJECT
+</h1>
+
+<p>Adding a prebuilt app to an Android Open Source Project (AOSP) involves several steps. This process allows you to include a binary APK (Android Package) into the AOSP build system so that it is installed on the device as part of the system image. Here's a detailed guide:
+</p>
+<h3>### BUILD EMULATOR 
+</h3>
+<p>Open terminal </p>
+
+<p>$cd       “working_directory”  (aosp12)</p>
+<p>$source build/envsetup.sh</p>
+<p>$ lunch</p>
+<p>If you are getting this :</p>
+
+<p>You're building on Linux</p>
+
+<p>Warning: Cannot display lunch menu.</p>
+
+<p>Note: You can invoke lunch with an explicit target:</p>
+
+ <p> usage: lunch [target]</p>
+<p>Which would you like? [aosp_cf_x86_64_phone-trunk_staging-eng]</p>
+<p>Pick from common choices above (e.g. 13) or specify your own (e.g. aosp_barbet-trunk_staging-eng): </p>
+<p>Run:</p>
+<h6>$ export TARGET_RELEASE=trunk_staging</h6>
+<h6>$ build_build_var_cache</h6>
+
+<p>After that if you are getting this error:</p>
+<p>In file included from build/make/core/config.mk:380:</p>
+<p>In file included from build/make/core/envsetup.mk:51:</p>
+<p>build/make/core/release_config.mk:145: error: No release config found for TARGET_RELEASE: trunk_staging. Available releases are: ap2a.</p>
+<p>20:39:02 dumpvars failed with: exit status 1</p>
+
+<p>Run This :<br>
+    $cd       “working_directory”  (aosp12)<br>
+    $source build/envsetup.sh<br>
+    $export TARGET_RELEASE=ap2a<br>
+    $build_build_var_cache<br>
+    $ lunch<br>
+    We will get the lunch menu:<br>
+    <br>
+    Pick from common choices above (e.g. 13) (if this is not working ) <br>
+    </p>
+
+   <p>Then Run: <br>
+    lunch sdk_car_x86_64-ap2a-eng<br>
+    (note:The form of the lunch sdk_car_x86_64-ap2a-eng  is lunch sdk_car_x86_64-$ap2a-$variant)<br>
+    </p>
+
+
+    <p>
+        After selecting any of one from lunch menu build it :<br>
+        $m -j$(number of jobs)<br>
+    <br>
+        After build emulator run this command to run the emulator :<br>
+        $emulator -no-snapshot-load or emulator -wipe-data or emulator<br>
+    </p>
+
+
+    <p>
+        Note:-  The difference between userdebug and eng :<br>
+        the build system allows for additional apps to install<br>
+         themselves in userdebug builds and eng builds independently
+         <br> from the product configuration, via LOCAL_MODULE_TAGS. debug modules are <br>
+         installed in userdebug and eng builds, eng modules are installed in eng builds.<br>
+    </p>
+
+    <h2># SETPS TO ADD PREBUILT </h2>
+    <br>
+    <br>
+    <h1>### 1. **Prepare the Prebuilt APK**</h1>
+    <p>Ensure you have the APK file of the app you want to include. This APK <br>
+        should be properly signed if it requires any special permissions<br>
+         or system-level access.</p>
+
+    <p>Let the app is (myapp.apk)</p>
+    <h4>### 2. **Set Up the AOSP Build Environment**</h4>
+
+    <p>
+        Before you begin, ensure that your AOSP build environment is correctly set up. This involves:<br>
+
+    - Cloning the AOSP source code.<br>
+    - Setting up the build environment.<br>
+    - Choosing the target device and build configuration.<br>
+    </p>
+
+
+   <h4> ### 3. **Create Directories for the Prebuilt App**</h4>
+
+<p>Navigate to the AOSP root directory and create a directory structure for your prebuilt app within the `vendor` directory. 
+</p>
+<p>aosp12/packages/apps/Car/AMyApp</p>
+<p>
+AMyApp<br>
+	-AMyApp.apk<br>
+	-Android.bp<br>
+	-myap.mk<br>
+	-preinstalled-packages-AMyapp.xml <br>
+</p>
+
+<h4>### 4. **Create Android.mk,Android.bp,preinstalled-packages-AMyapp.xml File**</h4>
+<p>Inside the directory where you placed the APK, create an `Android.mk` <br>file to specify how the APK should be included in the build:
+    <p>
+        AMyApp<br>
+            -AMyApp.apk<br>
+            -Android.bp<br>
+            -myap.mk<br>
+            -preinstalled-packages-AMyapp.xml <br>
+        </p>
+
+        <h3>### 5. **Register the Prebuilt App in the Build System** </h3>
+        <p>Add the app to  the directory:</p>        
+<br>    
+         <p>  aosp12/packages/services/Car/car_product/build/car.mk</p>
+
+         <p>
+
+         # Automotive specific packages<br>
+         PRODUCT_PACKAGES += \<br>
+            CarFrameworkPackageStubs \<br>
+            CarService \<br>
+            CarShell \<br>
+            CarDialerApp \<br>
+            CarRadioApp \<br>
+            OverviewApp \<br>
+            CarLauncher \<br>
+            CarSystemUI \<br>
+            LocalMediaPlayer \<br>
+            CarMediaApp \<br>
+            CarMessengerApp \<br>
+            CarHTMLViewer \<br>
+            CarMapsPlaceholder \<br>
+            CarLatinIME \<br>
+            CarSettings \<br>
+            CarUsbHandler \<br>
+            RotaryIME \<br>
+            RotaryPlayground \<br>
+            android.car.builtin \<br>
+            car-frameworks-service \<br>
+            libcarservicehelperjni \<br>
+            com.android.car.procfsinspector \<br>
+            com.android.permission \<br>
+            AMyApp \<br>
+            <br>
+         </p>
+
+
+
+         <h4>### 6. **Build the AOSP**</h4>
+         <p>
+            Now you are ready to build the AOSP with the prebuilt app included:<br>
+            <br>
+
+
+        $source build/envsetup.sh<br>
+        $lunch <your_device>-eng<br>
+        $make -j$<number_of_jobs><br>
+         </p>
+
+
+
+        <h3>END</h3>
