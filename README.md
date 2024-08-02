@@ -1,6 +1,6 @@
 # AOSP
-#Download and Build AOSP,
-#Build Emulator,
-#Adding the prebuild app in aosp ,
-And change the bootanimation
+#Download and Build AOSP,<br>
+#Build Emulator,<br>
+#Adding the prebuild app in aosp ,<br>
+And change the bootanimation<br>
 
