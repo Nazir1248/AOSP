@@ -111,7 +111,11 @@ AMyApp<br>
         <h3>### 5. **Register the Prebuilt App in the Build System** </h3>
         <p>Add the app to  the directory:</p>        
 <br>    
-         <p>  aosp12/packages/services/Car/car_product/build/car.mk</p>
+         <p>  aosp12/packages/services/Car/car_product/build/car_system.mk</p>
+path for android 14 :
+	  <p>  aosp12/packages/services/Car/car_product/build/car_system.mk</p>
+path for android 12 & 13:
+	   <p>  aosp12/packages/services/Car/car_product/build/car.mk</p>
 
          <p>
 
